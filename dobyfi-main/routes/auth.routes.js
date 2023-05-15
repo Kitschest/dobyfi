@@ -22,13 +22,13 @@ router.get("/signup", isLoggedOut, (req, res) => {
 
 // POST /auth/signup
 router.post("/signup", isLoggedOut, (req, res) => {
-  const { username, email, password } = req.body;
+  const { name, lastname, username, email, age, sex, accountType, password } = req.body;
 
-  // Check that username, email, and password are provided
-  if (username === "" || email === "" || password === "") {
+  // Check that all fields are provided
+  if (!name || !lastname || !username || !email || !age || !sex || !accountType || !password) {
     res.status(400).render("auth/signup", {
       errorMessage:
-        "All fields are mandatory. Please provide your username, email and password.",
+        "All fields are mandatory. Please provide your name, lastname, username, email, age, sex, account type and password.",
     });
 
     return;
@@ -42,26 +42,22 @@ router.post("/signup", isLoggedOut, (req, res) => {
     return;
   }
 
-  //   ! This regular expression checks password for special characters and minimum length
-  /*
-  const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
-  if (!regex.test(password)) {
-    res
-      .status(400)
-      .render("auth/signup", {
-        errorMessage: "Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter."
-    });
-    return;
-  }
-  */
-
   // Create a new user - start by hashing the password
   bcrypt
     .genSalt(saltRounds)
     .then((salt) => bcrypt.hash(password, salt))
     .then((hashedPassword) => {
       // Create a user and save it in the database
-      return User.create({ username, email, password: hashedPassword });
+      return User.create({ 
+        name, 
+        lastname, 
+        username, 
+        email, 
+        age, 
+        sex, 
+        accountType, 
+        password: hashedPassword 
+      });
     })
     .then((user) => {
       res.redirect("/auth/login");
@@ -72,13 +68,14 @@ router.post("/signup", isLoggedOut, (req, res) => {
       } else if (error.code === 11000) {
         res.status(500).render("auth/signup", {
           errorMessage:
-            "Username and email need to be unique. Provide a valid username or email.",
+            "Username and email need to be unique. Either username or email already in use.",
         });
       } else {
         next(error);
       }
     });
 });
+
 
 // GET /auth/login
 router.get("/login", isLoggedOut, (req, res) => {
