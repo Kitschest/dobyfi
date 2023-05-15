@@ -20,20 +20,23 @@ Our app must:
 <li>Be deployed online using Heroku so that anybody could use your app</li>
 
 <b>Routes Setup</b>
-<li> get/signup</li>
-<li> post/signup </li>
-<li> get/login <li>
-<li> post/login <li>
-<li>get/logout </li>
-<li> get/dashboard </li>
+
+<li>get/signup</li>
+<li>post/signup</li>
+<li>get/login<li>
+<li>post/login<li>
+<li>get/logout</li>
+<li>get/dashboard</li>
 
 <b>Tasks Section</b>
-<li>Title</ul>
-<li>Quantity assigned</ul>
+
+<li>Title</li>
+<li>Quantity assigned</li>
 <li>Tasks validated</li>
 <li>Checked if True/False</li>
 
 <b>Users Section</b>
+
 <li>Total Amount $</li>
 <li>Name</li>
 <li>Surname</li>
