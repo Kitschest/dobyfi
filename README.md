@@ -18,7 +18,8 @@ Our app must:
 <li>Have a repo on GitHub.
 <li>Have at least 1 commit per day that you worked on.
 <li>Be deployed online using Heroku so that anybody could use your app</li>
-
+<div>
+</div>
 <b>Routes Setup</b>
 
 <li>get/signup</li>
@@ -27,7 +28,8 @@ Our app must:
 <li>post/login<li>
 <li>get/logout</li>
 <li>get/dashboard</li>
-
+<div>
+</div>
 <b>Tasks Section</b>
 
 <li>Title</li>
@@ -35,6 +37,8 @@ Our app must:
 <li>Tasks validated</li>
 <li>Checked if True/False</li>
 
+<div>
+</div>
 <b>Users Section</b>
 
 <li>Total Amount $</li>
