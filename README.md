@@ -1,4 +1,4 @@
-# dobyfi
+# Dobyfi
 
 This is a README.md that will have all the necessary instructions to complete a Web application for our 2nd project on Ironhack, Team Pedro Torres & Xavi Trallero. 
 
