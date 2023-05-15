@@ -4,8 +4,6 @@ This is a README.md that will have all the necessary instructions to complete a 
 
 We'll be building an Express app, which means we'll learn/practice what it takes to make a functional application from the ground up.
 
-<title> Dobyfi </title>
-
 <h1> Dobify, a fintech to empower young generations understand how economy works</h1>
 
 <h2><b>Technical Requirements</b></h1>
@@ -22,25 +20,25 @@ Our app must:
 <li>Be deployed online using Heroku so that anybody could use your app</li>
 
 <b>Routes Setup</b>
-<ul> get/signup</ul>
-<ul> post/signup </ul>
-<ul> get/login <ul>
-<ul> post/login <ul>
-<ul>get/logout </ul>
-<ul> get/dashboard </ul>
+<li> get/signup</li>
+<li> post/signup </li>
+<li> get/login <li>
+<li> post/login <li>
+<li>get/logout </li>
+<li> get/dashboard </li>
 
 <b>Tasks Section</b>
-<ul>Title</ul>
-<ul>Quantity assigned</ul>
-<ul>Tasks validated</ul>
-<ul>Checked if True/False</ul>
+<li>Title</ul>
+<li>Quantity assigned</ul>
+<li>Tasks validated</li>
+<li>Checked if True/False</li>
 
 <b>Users Section</b>
-<ul>Total Amount $</ul>
-<ul>Name</ul>
-<ul>Surname</ul>
-<ul>Age</ul>
-<ul>Tasks [object ID]</ul>
-<ul>is Dad? True/False</ul>
-<ul>user Rel [object ID]</ul>
+<li>Total Amount $</li>
+<li>Name</li>
+<li>Surname</li>
+<li>Age</li>
+<li>Tasks [object ID]</li>
+<li>is Dad? True/False</li>
+<li>user Rel [object ID]</li>
 
