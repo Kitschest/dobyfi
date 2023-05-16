@@ -22,25 +22,17 @@ router.get("/signup", isLoggedOut, (req, res) => {
 
 // POST /auth/signup
 router.post("/signup", isLoggedOut, (req, res) => {
-  const { name, lastname, username, email, age, sex, accountType, password } = req.body;
+  const { name, lastname, username, email, password, age, sex, accountType } = req.body;
 
   // Check that all fields are provided
-  if (!name || !lastname || !username || !email || !age || !sex || !accountType || !password) {
+  if (!name || !lastname || !username || !email || !password || !age || !sex || !accountType) {
     res.status(400).render("auth/signup", {
-      errorMessage:
-        "All fields are mandatory. Please provide your name, lastname, username, email, age, sex, account type and password.",
+      errorMessage: "All fields are mandatory. Please provide your all details.",
     });
-
     return;
   }
 
-  if (password.length < 6) {
-    res.status(400).render("auth/signup", {
-      errorMessage: "Your password needs to be at least 6 characters long.",
-    });
-
-    return;
-  }
+  // You can add more validation here if needed
 
   // Create a new user - start by hashing the password
   bcrypt
@@ -48,15 +40,15 @@ router.post("/signup", isLoggedOut, (req, res) => {
     .then((salt) => bcrypt.hash(password, salt))
     .then((hashedPassword) => {
       // Create a user and save it in the database
-      return User.create({ 
-        name, 
-        lastname, 
-        username, 
-        email, 
-        age, 
-        sex, 
-        accountType, 
-        password: hashedPassword 
+      return User.create({
+        name,
+        lastname,
+        username,
+        email,
+        password: hashedPassword,
+        age,
+        sex,
+        accountType
       });
     })
     .then((user) => {
@@ -67,8 +59,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
         res.status(500).render("auth/signup", { errorMessage: error.message });
       } else if (error.code === 11000) {
         res.status(500).render("auth/signup", {
-          errorMessage:
-            "Username and email need to be unique. Either username or email already in use.",
+          errorMessage: "Username and email need to be unique. Either username or email is already used.",
         });
       } else {
         next(error);
