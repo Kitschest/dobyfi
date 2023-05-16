@@ -22,6 +22,7 @@ router.get("/signup", isLoggedOut, (req, res) => {
 
 // POST /auth/signup
 router.post("/signup", isLoggedOut, (req, res) => {
+  console.log("body", req.body)
   const { name, lastname, username, email, password, age, sex, accountType } = req.body;
 
   // Check that all fields are provided
@@ -89,14 +90,14 @@ router.post("/login", isLoggedOut, (req, res, next) => {
 
   // Here we use the same logic as above
   // - either length based parameters or we check the strength of a password
-  if (password.length < 6) {
-    return res.status(400).render("auth/login", {
-      errorMessage: "Your password needs to be at least 6 characters long.",
-    });
-  }
+  // if (password.length < 6) {
+  //   return res.status(400).render("auth/login", {
+  //     errorMessage: "Your password needs to be at least 6 characters long.",
+  //   });
+  // }
 
   // Search the database for a user with the email submitted in the form
-  User.findOne({ email })
+  User.findOne({ username })
     .then((user) => {
       // If the user isn't found, send an error message that user provided wrong credentials
       if (!user) {

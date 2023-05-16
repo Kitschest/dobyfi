@@ -2,32 +2,34 @@
 <h1>Sign Up</h1>
 
 <form action="/auth/signup" method="POST">
+ {{ errorMessage }}
   <div class="col">
-    <input type="text" class="form-control" placeholder="First name" aria-label="First name">
+    <input name="name" type="text" class="form-control" placeholder="First name" aria-label="First name"></div>
 
   <div class="col">
-    <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+    <input name="lastname" type="text" class="form-control" placeholder="Last name" aria-label="Last name"></div>
 
   <div class="col">
-        <input type="text" class="form-control" placeholder="username" aria-label="username">
+        <input name="username" type="text" class="form-control" placeholder="username" aria-label="username"></div>
 
   <div class="col">
-        <input type="text" class="form-control" placeholder="e-mail" aria-label="e-mail">
+        <input name="email" type="text" class="form-control" placeholder="e-mail" aria-label="e-mail"></div>
 
   <div class="col">
-            <input type="number" class="form-control" placeholder="age" aria-label="age"required>
+            <input name="age" type="number" class="form-control" placeholder="age" aria-label="age"required></div>
 
   <div class="col">
             <select id="sex" class="form-control" placeholder="sex" name="sex" required>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
                 </select>
+                </div>
 
   <label for="accountType">Type of account:</label>
   <select id="accountType" name="accountType" required>
-    <option value="parent">Parent Account</option>
-    <option value="child">Child Account</option>
+    <option value="Parent Account">Parent Account</option>
+    <option value="Child Account">Child Account</option>
   </select>
 
   <label for="password">Password:</label>

@@ -2,6 +2,8 @@
 <h1>Login</h1>
 
 <form action="/auth/login" method="POST">
+ {{ errorMessage }}
+
   <label for="username">Username:</label>
   <input type="text" id="username" name="username" required>
 
