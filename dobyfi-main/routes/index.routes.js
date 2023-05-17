@@ -47,4 +47,14 @@ Task.create({title, amount, validated:false, confirmed:false})
   res.redirect("/dashboard");
 })
 })
+
+Task.findByIdAndDelete({title, amount, validated:true})
+.then(taskDeleted=>{
+  return User.findByIdAndUpdate (req.session.currentUser._id, { $push: { tasks:taskDeleted }}, {new:false})
+
+})
+.then(user => {
+  // we reload the page redirecting to the dashboard page
+  res.redirect("/dashboard");
+})
 module.exports = router;
