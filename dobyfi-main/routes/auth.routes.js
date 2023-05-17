@@ -15,15 +15,48 @@ const User = require("../models/User.model");
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
+//const multer = require ("multer");
+//const upload = multer ({dest: './public/uploads'}) 
+
+
+const multer = require ("multer");
+const cloudinary = require ('cloudinary') .v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+
+
+
+// Configuration 
+cloudinary.config({
+  cloud_name: "dyevbjvxn",
+  api_key: "217881285198318",
+  api_secret: "EP6QDKsjHmuruJPBUtMvWniTiVU"
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'cloudinary-test',
+    allowed_formats: ['jpg', 'png', 'jpeg', 'webp']
+
+  },
+});
+
+
+const upload = multer ({storage});
+
+
 // GET /auth/signup
 router.get("/signup", isLoggedOut, (req, res) => {
   res.render("auth/signup");
 });
 
 // POST /auth/signup
-router.post("/signup", isLoggedOut, (req, res) => {
+router.post("/signup", isLoggedOut, upload.single("image"), (req, res) => {
   console.log("body", req.body)
   const { name, lastname, username, email, password, age, sex, accountType } = req.body;
+console.log("---> FILE:", req.file)
+//upload.single("image"),
 
   // Check that all fields are provided
   if (!name || !lastname || !username || !email || !password || !age || !sex || !accountType) {
@@ -49,7 +82,8 @@ router.post("/signup", isLoggedOut, (req, res) => {
         password: hashedPassword,
         age,
         sex,
-        accountType
+        accountType,
+        profileImageSrc: req.file.path
       });
     })
     .then((user) => {
@@ -122,8 +156,8 @@ router.post("/login", isLoggedOut, (req, res, next) => {
           req.session.currentUser = user.toObject();
           // Remove the password field
           delete req.session.currentUser.password;
-console.log("dashboard")
-          res.redirect("/dashboard");
+          console.log("dashboard")
+          res.redirect("/dashboard/" + user._id);
         })
         .catch((err) => next(err)); // In this case, we send error handling to the error handling middleware.
     })

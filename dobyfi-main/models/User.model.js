@@ -44,6 +44,9 @@ const userSchema = new Schema(
       required: [true, "Password is required."],
     },
 
+    profileImageSrc: String,
+
+
     tasks: [
       Types.ObjectId
     ]

@@ -1,8 +1,13 @@
 <div id="form">
 <h1>Sign Up</h1>
 
-<form action="/auth/signup" method="POST">
+<form action="/auth/signup" method="POST" enctype="multipart/form-data">
  {{ errorMessage }}
+
+ {{!-- 
+<form action="/auth/signup" method="POST" enctype="multipart/form-data">
+  --}}
+
   <div class="col">
     <input name="name" type="text" class="form-control" placeholder="First name" aria-label="First name"></div>
 
@@ -31,6 +36,14 @@
     <option value="Parent Account">Parent Account</option>
     <option value="Child Account">Child Account</option>
   </select>
+ 
+  <label for="image">image:</label>
+  <input type="file" id="image" name="image">
+  
+ {{!-- 
+   <label for="image">image:</label>
+  <input type="file" id="image" name="image">
+  --}}
 
   <label for="password">Password:</label>
   <input type="password" id="password" name="password" required>
