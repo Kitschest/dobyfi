@@ -67,7 +67,27 @@ router.post("/signup", isLoggedOut, (req, res) => {
       }
     });
 });
-
+const nodemailer = require('nodemailer');
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    User: 'dobyfiregister@gmail.com',
+    pass: 'Works2023@',
+  },
+});
+// Send the confirmation email
+transporter.sendMail({
+from: 'dobyfiregister@gmail.com',
+to: User.email, // user.email is the email address of the user who signed up
+subject: 'Confirmation Email Registration',
+text: 'Thank you for signing up! Your account has been successfully created. Welcome to Dobyfi, where magic happens.',
+}, (error, info) => {
+if (error) {
+  console.error('Error sending email:', error);
+} else {
+  console.log('Confirmation email sent:', info.response);
+}
+});
 
 // GET /auth/login
 router.get("/login", isLoggedOut, (req, res) => {

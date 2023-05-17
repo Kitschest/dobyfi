@@ -43,10 +43,13 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required."],
     },
+    balance: {
+      type: Number,
+      required: [true, "Balance is required."], 
+      default: 100
+    },
 
-    tasks: [
-      Types.ObjectId
-    ]
+    tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
     
   },
   {

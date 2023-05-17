@@ -1,34 +1,45 @@
-<div>
-100$
-</div>
-<button type="button" class="btn btn-success">Success</button>
-
-
-
-<form>
-  <div class="mb-3">
-    <label for="exampleInputText" class="form-label">Task</label>
-    <input type="text" class="form-control" id="exampleInputText">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="dashboard.js"></script>
+</head>
+<body>
+  <div>
+    {{balance}}€
   </div>
-  <div class="mb-3">
-    <input type="number" class="form-control" id="number">
-    <label for="number" class="form-label">$$</label>
-  </div>
+  <button type="button" class="btn btn-success"><b>Load Balance</b></button>
+  <form action="/dashboard/addtask" method="post">
+    <div class="mb-3">
+      <label for="exampleInputText" class="form-label">Task</label>
+      <input type="text" class="form-control" id="exampleInputText" name="title">
+    </div>
+    <div class="mb-3">
+      <input type="number" class="form-control" id="number" name="amount">
+      <label for="number" class="form-label">€</label>
+    </div>
   
-  <button type="submit" class="btn btn-primary">add task</button>
-</form>
+    <button type="submit" class="btn btn-primary">Add task</button>
+    {{!-- <button type="submit" class="btn btn-primary">Edit Task</button> --}}
+  {{task}}
+  </form>
+  <ol class="list-group list-group-numbered">
+    {{#each tasks}}
+    <li class="list-group-item"> {{this.title}}
+    <button type="button" class="btn btn-success">Validate</button>
+    <button type="button" class="btn btn-success">Delete</button>
+    <button type="button" class="btn btn-success">Confirm</button>
+    </li>
+    {{/each}}
+    
+  </ol>
+</body>
+</html>
 
 
 
-<ol class="list-group list-group-numbered">
-  <li class="list-group-item">A list item <button type="button" class="btn btn-success">Success</button>
-<button type="button" class="btn btn-success">Success</button>
-</li>
-  <li class="list-group-item">A list item <button type="button" class="btn btn-success">Success</button>
-<button type="button" class="btn btn-success">Success</button>
-</li>
-  <li class="list-group-item">A list item <button type="button" class="btn btn-success">Success</button>
-<button type="button" class="btn btn-success">Success</button>
-</li>
-</ol>
+
 
