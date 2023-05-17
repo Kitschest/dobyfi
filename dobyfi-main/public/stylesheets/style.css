@@ -1,12 +1,12 @@
-.background-image {
+ .background-image {
 	background: url('../images/img1.png') no-repeat center center fixed; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	height: 100vh; /* This makes sure that the background image covers the full height of the view */
+	height: 100vh; /* This makes sure that the background image covers the full height of the view
 	width: 100%; /* This makes sure that the background image covers the full width of the view */
-  }
+  } */
   
   .logo-container {
 	display: flex;
@@ -86,4 +86,4 @@
     align-items: center;
     margin-bottom: 10px;
     /* Add your custom styles for each list item */
-  }
+  } */
