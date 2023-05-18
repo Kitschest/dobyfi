@@ -14,6 +14,7 @@ const User = require("../models/User.model");
 // Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
+const { findByIdAndUpdate } = require("../models/Task.model");
 
 // GET /auth/signup
 router.get("/signup", isLoggedOut, (req, res) => {
@@ -23,10 +24,10 @@ router.get("/signup", isLoggedOut, (req, res) => {
 // POST /auth/signup
 router.post("/signup", isLoggedOut, (req, res) => {
   console.log("body", req.body)
-  const { name, lastname, username, email, password, age, sex, accountType } = req.body;
-
+  const { name, lastname, username, email, password, age, sex, } = req.body;
+  const { nameChild, lastnameChild, usernameChild, emailChild, passwordChild, ageChild, sexChild, } = req.body;
   // Check that all fields are provided
-  if (!name || !lastname || !username || !email || !password || !age || !sex || !accountType) {
+  if (!name || !lastname || !username || !email || !password || !age || !sex || !nameChild|| !lastnameChild || !usernameChild || !emailChild || !passwordChild|| !ageChild || !sexChild) {
     res.status(400).render("auth/signup", {
       errorMessage: "All fields are mandatory. Please provide your all details.",
     });
@@ -41,17 +42,45 @@ router.post("/signup", isLoggedOut, (req, res) => {
     .then((salt) => bcrypt.hash(password, salt))
     .then((hashedPassword) => {
       // Create a user and save it in the database
-      return User.create({
-        name,
-        lastname,
-        username,
-        email,
-        password: hashedPassword,
-        age,
-        sex,
-        accountType
-      });
+      
+        User.create({
+          name,
+          lastname,
+          username,
+          email,
+          password: hashedPassword,
+          age,
+          sex,
+          parentAccount: true,
+          childAccount: false,
+          balance: 100
+        });
+      
+      
     })
+    .genSalt(saltRounds)
+    .then((salt) => bcrypt.hash(password, salt))
+    .then((hashedPassword) => {
+      // Create a user and save it in the database
+      
+       return User.create({
+          nameChild,
+          lastnameChild,
+          usernameChild,
+          emailChild,
+          passwordChild: hashedPassword,
+          ageChild,
+          sexChild,
+          parentAccount: false,
+          childAccount: true,
+          balance: 0
+        });
+      
+      
+    })
+// we have to update the users created with the relative
+    //.then(findbyIdandUpdate(parent))
+    //.then(findbyIdandUpdate(child))
     .then((user) => {
       res.redirect("/auth/login");
     })
@@ -67,27 +96,27 @@ router.post("/signup", isLoggedOut, (req, res) => {
       }
     });
 });
-const nodemailer = require('nodemailer');
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    User: 'dobyfiregister@gmail.com',
-    pass: 'Works2023@',
-  },
-});
-// Send the confirmation email
-transporter.sendMail({
-from: 'dobyfiregister@gmail.com',
-to: User.email, // user.email is the email address of the user who signed up
-subject: 'Confirmation Email Registration',
-text: 'Thank you for signing up! Your account has been successfully created. Welcome to Dobyfi, where magic happens.',
-}, (error, info) => {
-if (error) {
-  console.error('Error sending email:', error);
-} else {
-  console.log('Confirmation email sent:', info.response);
-}
-});
+// const nodemailer = require('nodemailer');
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     User: 'dobyfiregister@gmail.com',
+//     pass: 'Works2023@',
+//   },
+// });
+// // Send the confirmation email
+// transporter.sendMail({
+// from: 'dobyfiregister@gmail.com',
+// to: User.email, // user.email is the email address of the user who signed up
+// subject: 'Confirmation Email Registration',
+// text: 'Thank you for signing up! Your account has been successfully created. Welcome to Dobyfi, where magic happens.',
+// }, (error, info) => {
+// if (error) {
+//   console.error('Error sending email:', error);
+// } else {
+//   console.log('Confirmation email sent:', info.response);
+// }
+// });
 
 // GET /auth/login
 router.get("/login", isLoggedOut, (req, res) => {

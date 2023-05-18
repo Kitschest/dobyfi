@@ -1,5 +1,7 @@
 <div id="form">
-<h1>Sign Up</h1>
+<h1>Signup Page</h1>
+<br>
+<h2>Parent Account Information</h2>
 
 <form action="/auth/signup" method="POST">
  {{ errorMessage }}
@@ -25,17 +27,66 @@
                 <option value="Other">Other</option>
                 </select>
                 </div>
+                
+              <label for="password">Password</label>
+  <input type="password" name="password" required>
 
-  <label for="accountType">Type of account:</label>
+  {{!-- <label for="accountType">Type of account:</label>
   <select id="accountType" name="accountType" required>
-    <option value="Parent Account">Parent Account</option>
-    <option value="Child Account">Child Account</option>
-  </select>
+    <option value="Parent Account">Parent Account</option> --}}
+<br>
+<br>
+<br>
+  <h1>Child Information</h1>
 
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password" required>
+<div id="form">
+  <form>
+    <input name="nameChild" type="text" class="form-control" placeholder="name" aria-label="First name"></div>
 
+  <div class="col">
+    <input name="lastnameChild" type="text" class="form-control" placeholder="Last name" aria-label="Last name"></div>
+
+  <div class="col">
+        <input name="usernameChild" type="text" class="form-control" placeholder="username" aria-label="username"></div>
+
+  <div class="col">
+        <input name="emailChild" type="text" class="form-control" placeholder="e-mail" aria-label="e-mail"></div>
+
+  <div class="col">
+            <input name="ageChild" type="number" class="form-control" placeholder="age" aria-label="age"required></div>
+
+  <div class="col">
+            <select id="sexChild" class="form-control" placeholder="sex" name="sex" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+                </select>
+                </div>
+
+<label for="password">Password</label>
+  <input type="password" name="passwordChild" required>
   <input type="submit" value="Submit">
 </form>
 
 </div>
+<script>
+  const accountTypeSelect = document.getElementById('accountType');
+  const relativeInput = document.getElementById('relative');
+
+  // Hide the "Relative" input initially
+  //relativeInput.style.display = 'none';
+
+  // Add event listener to the account type select
+  accountTypeSelect.addEventListener('change', function () {
+    if (accountTypeSelect.value === 'Parent Account') {
+      // If "Parent Account" is selected, show the "Relative" input
+      relativeInput.style.display = 'block';
+      relativeInput.setAttribute('required', 'required');
+    } else {
+      // If "Child Account" is selected, hide the "Relative" input
+      relativeInput.style.display = 'none';
+      relativeInput.removeAttribute('required');
+    }
+  });
+</script>
+

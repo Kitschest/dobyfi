@@ -34,10 +34,13 @@ const userSchema = new Schema(
       required: [true, "Sex is required."],
       enum: ["Male", "Female", "Other"],
     },
-    accountType: {
-      type: String,
+    parentAccount: {
+      type: Boolean,
       required: [true, "Account Type is required."],
-      enum: ["Parent Account", "Child Account"],
+    },
+    childAccount: {
+      type: Boolean,
+      required: [true, "Account Type is required."],
     },
     password: {
       type: String,
@@ -46,9 +49,9 @@ const userSchema = new Schema(
     balance: {
       type: Number,
       required: [true, "Balance is required."], 
-      default: 100
     },
-
+    
+    relative:{ type: Schema.Types.ObjectId, ref: 'User' },
     tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
     
   },

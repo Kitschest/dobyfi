@@ -7,6 +7,8 @@
     <script src="js/dashboard.js"></script>
   </head>
   <body>
+    {{#if parentAccount}}
+  <h1>Parent Account</h1>
     <div>
       {{balance}}€
     </div>
@@ -47,5 +49,65 @@
         </li>
       {{/each}}
     </ol>
+    {{else if childAccount}}
+    <h1>Child Account</h1>
+  <ol class="list-group list-group-numbered">
+      {{#each tasks}}
+        <li class="list-group-item">
+          {{this.title}}
+          {{this.amount}}€
+          <form action="/dashboard/confirm/{{this._id}}" method="post">
+            <button type="submit" class="btn btn-success">Confirm</button>
+          </form>
+        
+        </li>
+      {{/each}}
+    </ol>
+    {{/if}}
+
+ {{!-- {{#if parentAccount}}
+   
+    {{/if}}
+
+    <div>
+      {{balance}}€
+    </div>
+    <form action="/dashboard/defaultbalance" method="post">
+    <button type="submit" class="btn btn-success"><b>Load Balance</b></button>
+    </form>
+    <form action="/dashboard/addtask" method="post">
+      <div class="mb-3">
+        <label for="exampleInputText" class="form-label">Task</label>
+        <input
+          type="text"
+          class="form-control"
+          id="exampleInputText"
+          name="title"
+        />
+      </div>
+      <div class="mb-3">
+        <input type="number" class="form-control" id="number" name="amount" />
+        <label for="number" class="form-label">€</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Add task</button>
+      {{! <button type="submit" class="btn btn-primary">Edit Task</button> }}
+      {{task}}
+    </form>
+    <ol class="list-group list-group-numbered">
+      {{#each tasks}}
+        <li class="list-group-item">
+          {{this.title}}
+          {{this.amount}}€
+          <form action="/dashboard/delete/{{this._id}}" method="post">
+            <button type="submit" class="btn btn-success">Delete</button>
+          </form>
+          <form action="/dashboard/validate/{{this._id}}" method="post">
+            <button type="submit" class="btn btn-success">Validate</button>
+          </form>
+          {{! <button type="button" class="btn btn-success">Confirm</button> }}
+        </li>
+      {{/each}}
+    </ol> --}}
   </body>
 </html>
