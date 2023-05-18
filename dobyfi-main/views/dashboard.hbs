@@ -1,45 +1,51 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <script src="dashboard.js"></script>
-</head>
-<body>
-  <div>
-    {{balance}}€
-  </div>
-  <button type="button" class="btn btn-success"><b>Load Balance</b></button>
-  <form action="/dashboard/addtask" method="post">
-    <div class="mb-3">
-      <label for="exampleInputText" class="form-label">Task</label>
-      <input type="text" class="form-control" id="exampleInputText" name="title">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="js/dashboard.js"></script>
+  </head>
+  <body>
+    <div>
+      {{balance}}€
     </div>
-    <div class="mb-3">
-      <input type="number" class="form-control" id="number" name="amount">
-      <label for="number" class="form-label">€</label>
-    </div>
-  
-    <button type="submit" class="btn btn-primary">Add task</button>
-    {{!-- <button type="submit" class="btn btn-primary">Edit Task</button> --}}
-  {{task}}
-  </form>
-  <ol class="list-group list-group-numbered">
-    {{#each tasks}}
-    <li class="list-group-item"> {{this.title}}
-    <button type="button" class="btn btn-success">Validate</button>
-    <button type="button" class="btn btn-success">Delete</button>
-    {{!-- <button type="button" class="btn btn-success">Confirm</button> --}}
-    </li>
-    {{/each}}
-  {{delete}}
-  </ol>
-</body>
+    <form action="/dashboard/defaultbalance" method="post">
+    <button type="submit" class="btn btn-success"><b>Load Balance</b></button>
+    </form>
+    <form action="/dashboard/addtask" method="post">
+      <div class="mb-3">
+        <label for="exampleInputText" class="form-label">Task</label>
+        <input
+          type="text"
+          class="form-control"
+          id="exampleInputText"
+          name="title"
+        />
+      </div>
+      <div class="mb-3">
+        <input type="number" class="form-control" id="number" name="amount" />
+        <label for="number" class="form-label">€</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Add task</button>
+      {{! <button type="submit" class="btn btn-primary">Edit Task</button> }}
+      {{task}}
+    </form>
+    <ol class="list-group list-group-numbered">
+      {{#each tasks}}
+        <li class="list-group-item">
+          {{this.title}}
+          {{this.amount}}€
+          <form action="/dashboard/delete/{{this._id}}" method="post">
+            <button type="submit" class="btn btn-success">Delete</button>
+          </form>
+          <form action="/dashboard/validate/{{this._id}}" method="post">
+            <button type="submit" class="btn btn-success">Validate</button>
+          </form>
+          {{! <button type="button" class="btn btn-success">Confirm</button> }}
+        </li>
+      {{/each}}
+    </ol>
+  </body>
 </html>
-
-
-
-
-

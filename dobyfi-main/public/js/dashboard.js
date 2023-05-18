@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log('Load Balance button clicked!');
       // Perform other actions or function calls for your dashboard
     });
-  });
+  })
   document.addEventListener('DOMContentLoaded', function() {
     // Get the list items containing the tasks
     var listItems = document.querySelectorAll('.list-group-item');
@@ -22,16 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add your logic for handling the validation action here
         console.log('Validated task:', listItem.textContent.trim());
       });
-      
-      // Get the "Delete" button within the current list item
-      var deleteButton = listItem.querySelector('.btn-success:last-of-type');
-      
-      // Add a click event listener to the "Delete" button
-      deleteButton.addEventListener('click', function() {
-        // Add your logic for handling the delete action here
-        console.log('Deleted task:', listItem.textContent.trim());
-        listItem.remove(); // Remove the list item from the DOM
-      });
     });
   });
-  
+
+  //function deleteTask(id) {
+    //console.log(id);
+    
+  //}

@@ -1,4 +1,5 @@
 const { Schema, model, Types } = require("mongoose");
+const { User } = require("./User.model.js");
 
 const taskSchema = new Schema(
   {
@@ -7,7 +8,7 @@ const taskSchema = new Schema(
       required: [true, "Title is required."],
       trim: true,
     },
-    amount : {
+    amount: {
       type: Number,
       required: [true, "Amount is required."],
       trim: true,
@@ -17,7 +18,7 @@ const taskSchema = new Schema(
     },
     confirmed: {
       type: Boolean,
-    }, 
+    },
   },
   {
     timestamps: true,
