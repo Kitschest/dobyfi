@@ -42,8 +42,8 @@ router.post("/signup", isLoggedOut, (req, res) => {
     .then((salt) => bcrypt.hash(password, salt))
     .then((hashedPassword) => {
       // Create a user and save it in the database
-      
-        User.create({
+      // creating the parent user
+        return User.create({
           name,
           lastname,
           username,
@@ -58,19 +58,22 @@ router.post("/signup", isLoggedOut, (req, res) => {
       
       
     })
-    .genSalt(saltRounds)
-    .then((salt) => bcrypt.hash(password, salt))
+    .then(user => {
+      // var userParent = user;
+      return bcrypt.genSalt(saltRounds)
+    })
+    .then((salt) => bcrypt.hash(passwordChild, salt))
     .then((hashedPassword) => {
       // Create a user and save it in the database
-      
+      // Creating the child user
        return User.create({
-          nameChild,
-          lastnameChild,
-          usernameChild,
-          emailChild,
-          passwordChild: hashedPassword,
-          ageChild,
-          sexChild,
+          name:nameChild,
+          lastname:lastnameChild,
+          username:usernameChild,
+          email:emailChild,
+          password: hashedPassword,
+          age:ageChild,
+          sex:sexChild,
           parentAccount: false,
           childAccount: true,
           balance: 0
@@ -82,6 +85,21 @@ router.post("/signup", isLoggedOut, (req, res) => {
     //.then(findbyIdandUpdate(parent))
     //.then(findbyIdandUpdate(child))
     .then((user) => {
+      console.log("req body update parent", req.body)
+      // var userChild = user;
+      // console.log("parent userid",userParent._id);
+      // we set the relative property of the parent to their child
+    return User.findOneAndUpdate({username:req.body.username},{relative:user._id})
+    })
+    .then((user) => {
+      // we set the relative property of the child to their parent
+      return User.findOne({username:req.body.username})
+          })
+    .then((user) => {
+// we set the relative property of the child to their parent
+return User.findOneAndUpdate({username:req.body.usernameChild},{relative:user._id})
+    })
+    .then((user) => {
       res.redirect("/auth/login");
     })
     .catch((error) => {
@@ -92,7 +110,8 @@ router.post("/signup", isLoggedOut, (req, res) => {
           errorMessage: "Username and email need to be unique. Either username or email is already used.",
         });
       } else {
-        next(error);
+        //next(error);
+        console.log(error)
       }
     });
 });
