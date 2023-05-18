@@ -45,6 +45,19 @@ router.post("/dashboard/addtask", isLoggedIn, (req, res, next) => {
       );
     })
     .then((user) => {
+  console.log("req.body", req.body);
+
+      return Task.findOne({title})
+    })
+    .then((taskCreated) => {
+      console.log("req session relative",req.session.currentUser.relative)
+      return User.findByIdAndUpdate(
+        req.session.currentUser.relative,
+        { $push: { tasks: taskCreated } },
+        { new: true }
+      );
+    })
+    .then((user) => {
       // we reload the page redirecting to the dashboard page
       res.redirect("/dashboard");
     });
@@ -76,6 +89,16 @@ router.post("/dashboard/delete/:_id", isLoggedIn, (req, res, next) => {
     });
     
   })
+  .then((userUpdated) => {
+    return User.findByIdAndUpdate(
+      req.session.currentUser.relative,
+      {
+        $pullAll: {
+            tasks: [{_id: req.params._id}],
+        },
+    });
+    
+  })
   .then(user => {
     res.redirect("/dashboard")
   })
@@ -90,13 +113,33 @@ router.post("/dashboard/validate/:_id", isLoggedIn, (req, res, next) => {
   Task.findById(_id)
   .then(task => {
     // we decrease the value of the task
-    const taskValue = -task.amount
-    console.log("taskvalue",taskValue);
-    return User.findByIdAndUpdate(req.session.currentUser._id,{
-      $inc: {
-          balance:taskValue ,
-      }
+if (task.confirmed){
+  const taskValue = -task.amount
+  console.log("taskvalue",taskValue);
+  return User.findByIdAndUpdate(req.session.currentUser._id,{
+    $inc: {
+      balance:taskValue ,
+    }
   });
+} else {
+  res.redirect("/dashboard")
+  throw "cancel";
+
+}
+
+  })
+  .then(userUpdated=>{
+    return Task.findById(_id)
+    
+  })
+  .then(task => {
+    console.log('thus the task to update ------', task)
+return User.findByIdAndUpdate(req.session.currentUser.relative,{
+  $inc: {
+    balance:task.amount ,
+  }
+})
+
   })
   .then(userUpdated=>{
     return Task.deleteOne({ _id: req.params._id})
@@ -112,10 +155,55 @@ router.post("/dashboard/validate/:_id", isLoggedIn, (req, res, next) => {
     });
     
   })
+  .then((taskDeleted) => {
+    return User.findByIdAndUpdate(
+      req.session.currentUser.relative,
+      {
+        $pullAll: {
+            tasks: [{_id: req.params._id}],
+        }
+    });
+    
+  })
   .then(user => {
     res.redirect("/dashboard")
+  })
+  .catch(err=>{
+    next(err)
   })
 
 });
 
+router.post("/dashboard/confirm/:_id", isLoggedIn, (req, res, next) => {
+  // we check the ID of the task that we get from the route
+  console.info("params:", req.params);
+  const { _id } = req.params;
+  console.log("req.body-----",req.body)
+  // we get the task with the id that we got
+  Task.findById(_id)
+  .then(task => {
+    // we decrease the value of the task
+if (!task.confirmed){
+  // const taskValue = -task.amount
+  console.log("task-Confirm--------");
+  return Task.findByIdAndUpdate(_id,{
+    
+      confirmed:true ,
+    
+  });
+} else {
+  res.redirect("/dashboard")
+  throw "cancel";
+
+}
+  })
+  .then(user => {
+    console.log("confirmed task",_id);
+    res.redirect("/dashboard")
+  })
+  .catch(err=>{
+    next(err)
+  })
+
+});
 module.exports = router;
