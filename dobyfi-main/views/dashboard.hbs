@@ -7,7 +7,9 @@
     <script src="js/dashboard.js"></script>
   </head>
   <body>
+    <a href="/auth/logout" class="btn btn-danger">Logout</a>
     {{#if parentAccount}}
+    <div class="dashboard">
   <h1>Parent Account</h1>
     <div>
       {{balance}}€
@@ -49,6 +51,7 @@
         </li>
       {{/each}}
     </ol>
+    </div>
     {{else if childAccount}}
     <h1>Child Account</h1>
     <div>

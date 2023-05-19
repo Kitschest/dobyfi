@@ -20,17 +20,19 @@ time, mark, audio, video {
 }
 
 #logo {
-	position: absolute;
+	position:absolute;
 	top: 60;
-	right: 40%;
-	width: 200px; /* Or whatever size you want */
+	right: 35%;
+	width: 500px; /* Or whatever size you want */
   }
   
- 
+ #form {
+	color:white;
+ }
   
   .main-headline {
 	text-align: center;
-	margin-top: /* adjust according to the size of your logo */;
+	/* margin-top: adjust according to the size of your logo */
   }
   
   
@@ -40,9 +42,37 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-body {
-	line-height: 1;
+.title {
+	position:absolute;
+	top: 200;
+	right: 35%;
+	width: 500px;
+	color: white
+
 }
+
+.dashboard {
+	color: white;
+}
+.title h1 {
+	font-size: 50px
+}
+
+
+.login {
+	color: white;
+}
+.title h2 {
+	font-size: 25px;
+	color: rgb(73, 225, 73);
+}
+body {
+	background-image: url('../images/img2.PNG');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+  }
+  
 ol, ul {
 	list-style: none;
 }
